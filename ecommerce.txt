@@ -1,0 +1,31 @@
+create table products(id mediumint unsigned not null auto_increment,title varchar(50) not null,price float(8,2) not null,discount tinyint(4) unsigned ,vat tinyint(4) unsigned not null,unit_id tinyint unsigned not null, brand_id smallint unsigned not null,subcategory_id mediumint unsigned not null,picture1 varchar(4),picture2 varchar(4), picture3 varchar(4), picture4 varchar(4), picture5 varchar(4),default_picture varchar(4) not null  , primary key(id),unique key(title),foreign key(unit_id) references units(id),foreign key(brand_id) references brands(id),foreign key(subcategory_id) references subcategories(id));
+
+create table customers(id smallint unsigned not null auto_increment,name varchar(50) not null, email varchar(50) not null,paeeword varchar(32) not null,contact varchar(20) not null,gender tinyint unsigned not null,age tinyint unsigned not null,address varchar(255) not null, city_id smallint unsigned not null,picture varchar(4)not null,unique key(email),primary key(id),foreign key(city_id) references cities(id));
+
+create table admins(id tinyint unsigned not null auto_increment,name varchar(50) not null, email varchar(50)not null, password varchar(32) not null,nid varchar(25) not null,contact varchar(20) not null,type tinyint unsigned not null,unique key(email),primary key(id));
+
+
+create table shippings(id tinyint unsigned not null auto_increment,customer_id smallint unsigned not null,address varchar(255) not null,primary key(id),foreign key(customer_id)references customers(id));
+
+create table reviews(id tinyint unsigned not null auto_increment,product_id mediumint unsigned not null, customer_id smallint unsigned not null,description varchar(255) not null,ratings tinyint not null, primary key(id),foreign key(customer_id)references customers(id) ,foreign key(product_id)references products(id));
+
+ create table product_stock(id smallint unsigned not null,product_id mediumint unsigned not null,size_id tinyint unsigned not null,color_id tinyint unsigned not null,stock smallint unsigned not null,primary key(id),foreign key(product_id)references products(id),foreign key(size_id)references  sizes(id),foreign key(color_id)references colors(id) );
+create table orders(id int unsigned not null auto_increment,orderdate datetime not null,delivery_date datetime not null,payment_method_id tinyint unsigned not null,payment_info varchar(255) not null, shipping_status varchar(100) not null,shippings_id tinyint unsigned not null,primary key(id),foreign key(payment_method_id)references payment_method(id),foreign key(shippings_id)references shippings(id))
+
+create table order_dtails(id smallint unsigned not null auto_increment,order_id int unsigned not null,product_stock_id smallint unsigned not null,quantity tinyint unsigned not null,vat tinyint unsigned not null,discount tinyint unsigned not null,primary key(id),foreign key(order_id)references orders(id),foreign key(product_stock_id)references product_stock(id));
+
+
+
+create table units(id tinyint unsigned not null auto_increment,name varchar(30) not null,primary key(id),unique key(name));
+create table sizes(id tinyint unsigned not null auto_increment,name varchar(30) not null,primary key(id),unique key(name));
+create table colors(id tinyint unsigned not null auto_increment,name varchar(30) not null,primary key(id),unique key(name));
+create table categories(id smallint unsigned not null auto_increment,name varchar(30) not null,primary key(id),unique key(name));
+create table countries(id tinyint unsigned not null auto_increment,name varchar(30) not null,primary key(id),unique key(name));
+
+create table cities(id smallint unsigned not null auto_increment,name varchar(30) not null,country_id tinyint unsigned not null, primary key(id),unique key(name),foreign key(country_id) references countries(id));
+
+create table subcategories(id mediumint unsigned not null auto_increment,name varchar(30) not null,categorie_id smallint unsigned not null, primary key(id),unique key(name),foreign key(categorie_id) references categories(id));
+
+create table payment_method(id tinyint unsigned not null auto_increment,name varchar(30) not null, details varchar(50)not null, primary key(id),unique key(name));
+
+create table brands(id smallint unsigned not null auto_increment,name varchar(30) not null,logo tinyint unsigned not null, primary key(id),unique key(name));

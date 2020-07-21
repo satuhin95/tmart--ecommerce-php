@@ -1,0 +1,17 @@
+ .content{
+      width: 500px;
+      margin: 0 auto;
+    }
+ 	.tbl{
+			width: 80%;
+			text-align: center;
+			margin: 0 auto;
+			color: #fff;
+			font-size: 16px;
+			
+		}
+		.tbl th,td{
+			border: 1px solid green;
+			padding: 10px 0; 
+		}   
+
